@@ -1,0 +1,7 @@
+{
+  "name": "getFinancial",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
