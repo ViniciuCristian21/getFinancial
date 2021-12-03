@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons (click)="exitModal()">
+      <ion-button>
+        <ion-icon name="chevron-back-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Nome</ion-label>
+      <ion-input placeholder="Descrição breve do produto"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Valor</ion-label>
+      <ion-input placeholder="Valor em R$"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Data</ion-label>
+      <ion-datetime
+      displayFormat="DD-MM-YYYY">
+    </ion-datetime>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block">Salvar</ion-button>
+</ion-content>

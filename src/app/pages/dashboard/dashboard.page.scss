@@ -42,4 +42,11 @@ ion-card {
   font-size: 90%;
   font-weight: 400;
   text-align: center;
+  margin-top: 0.5rem;
+  border: #000 solid 1px;
+  padding: 0.5rem 0;
+  cursor: pointer;
+}
+.data-list:hover {
+  filter: brightness(0.5);
 }

@@ -33,7 +33,7 @@
         </ion-card>
       </ion-col>
     </ion-row>
-    <div class="new-value">
+    <div class="new-value" (click)="modalNewItem()">
       + Adcicionar novo
     </div>
     <ion-grid>
@@ -48,7 +48,7 @@
           Data
         </ion-col>
       </ion-row>
-      <ion-row class="data-list">
+      <ion-row class="data-list" (click)="onDelete('88888888')">
         <ion-col size="4">
           Roupa
         </ion-col>
