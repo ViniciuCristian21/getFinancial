@@ -18,6 +18,10 @@ export class DeletePopoverService {
       await popover.present();
 
       const { role } = await popover.onDidDismiss();
-      console.log('onDidDismiss resolved with role', role);
+      // console.log('onDidDismiss resolved with role', role);
+    }
+
+    async closePopover() {
+      await this.popoverController.dismiss();
     }
 }

@@ -2,6 +2,7 @@ import { NewItemModalService } from './shared/new-item-modal.service';
 import { DeletePopoverService } from './shared/delete-popover.service';
 import { Component, OnInit } from '@angular/core';
 import { GetIdService } from './shared/get-id.service';
+import { DatabaseFbService } from './shared/database-fb.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,12 +10,14 @@ import { GetIdService } from './shared/get-id.service';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
-
+  itens: any = [];
   constructor(private popoverDelete: DeletePopoverService,
               private modalNewItemService: NewItemModalService,
-              private getid: GetIdService) { }
+              private getid: GetIdService,
+              private databaseService: DatabaseFbService) { }
 
   ngOnInit() {
+    this.getAll();
   }
 
   async onDelete(id: string) {
@@ -24,6 +27,11 @@ export class DashboardPage implements OnInit {
 
   async modalNewItem() {
     await this.modalNewItemService.presentQunatitiesProduct();
+  }
+
+  async getAll() {
+    this.itens = await this.databaseService.getAll();
+    console.log(this.itens)
   }
 
 

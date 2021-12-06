@@ -48,15 +48,15 @@
           Data
         </ion-col>
       </ion-row>
-      <ion-row class="data-list" (click)="onDelete('88888888')">
+      <ion-row class="data-list" (click)="onDelete('88888888')" *ngFor="let d of itens">
         <ion-col size="4">
-          Roupa
+          {{d.name}}
         </ion-col>
         <ion-col size="4">
-          R$5,00
+          {{d.value}}
         </ion-col>
         <ion-col size="4">
-          10/01/2021
+          {{d.data}}
         </ion-col>
       </ion-row>
     </ion-grid>

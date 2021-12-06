@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DeletePopoverService } from 'src/app/pages/dashboard/shared/delete-popover.service';
 import { GetIdService } from 'src/app/pages/dashboard/shared/get-id.service';
 
 @Component({
@@ -8,12 +9,14 @@ import { GetIdService } from 'src/app/pages/dashboard/shared/get-id.service';
 })
 export class DeletePopoverComponent implements OnInit {
   uId: string
-  constructor( private getid: GetIdService) { }
+  constructor( private getid: GetIdService,
+               private popoverDelete: DeletePopoverService,) { }
 
   ngOnInit() {}
 
   onDelete() {
     this.uId = this.getid.id;
+    this.popoverDelete.closePopover();
     console.log("DELETADO!", this.uId)
   }
 
