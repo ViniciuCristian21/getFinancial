@@ -34,4 +34,21 @@ export class DatabaseFbService {
 
     return this.result;
   }
+
+  async InsertData(Itens: Itens) {
+    const {name, value, data} = Itens;
+    const [newData,] = data.split('T')
+
+    await addDoc(this.userCollectionRef, {
+      name: name,
+      value: value,
+      data: newData
+    });
+  }
+
+  async removeData(id: string) {
+    const originDoc = doc(this.userCollectionRef, id);
+
+    await deleteDoc(originDoc);
+  }
 }

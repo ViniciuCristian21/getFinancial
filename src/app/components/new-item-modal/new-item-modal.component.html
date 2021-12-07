@@ -11,19 +11,21 @@
   <ion-list>
     <ion-item>
       <ion-label position="stacked">Nome</ion-label>
-      <ion-input placeholder="Descrição breve do produto"></ion-input>
+      <ion-input placeholder="Descrição breve do produto" name="name"  [(ngModel)]="itens.name"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Valor</ion-label>
-      <ion-input placeholder="Valor em R$"></ion-input>
+      <ion-input placeholder="Valor em R$" name="value"  [(ngModel)]="itens.value"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Data</ion-label>
       <ion-datetime
       displayFormat="DD-MM-YYYY"
-      placeholder="Exemple: 01-01-2022">
+      placeholder="Exemple: 01-01-2022"
+      name="data"
+      [(ngModel)]="itens.data">
     </ion-datetime>
     </ion-item>
   </ion-list>
-  <ion-button expand="block">Salvar</ion-button>
+  <ion-button expand="block" (click)="saveItens()">Salvar</ion-button>
 </ion-content>

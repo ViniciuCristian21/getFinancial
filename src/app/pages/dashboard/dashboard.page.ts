@@ -28,7 +28,9 @@ export class DashboardPage implements OnInit {
   async modalNewItem() {
     await this.modalNewItemService.presentQunatitiesProduct();
   }
-
+  ionViewWillEnter(){
+    this.getAll();
+  }
   async getAll() {
     this.itens = await this.databaseService.getAll();
     console.log(this.itens)

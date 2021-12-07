@@ -1,3 +1,5 @@
+import { DatabaseFbService } from './../../pages/dashboard/shared/database-fb.service';
+import { Itens } from './../../pages/dashboard/shared/itens';
 import { Component, OnInit } from '@angular/core';
 import { NewItemModalService } from 'src/app/pages/dashboard/shared/new-item-modal.service';
 
@@ -7,13 +9,25 @@ import { NewItemModalService } from 'src/app/pages/dashboard/shared/new-item-mod
   styleUrls: ['./new-item-modal.component.scss'],
 })
 export class NewItemModalComponent implements OnInit {
+  itens: Itens;
+  constructor(private modalNewItemService: NewItemModalService,
+              private databaseService: DatabaseFbService) { }
 
-  constructor(private modalNewItemService: NewItemModalService) { }
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.itens = new Itens();
+  }
 
   exitModal() {
     this.modalNewItemService.dismiss();
+  }
+
+  async saveItens() {
+    try {
+      this.databaseService.InsertData(this.itens);
+      this.exitModal();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
 }
