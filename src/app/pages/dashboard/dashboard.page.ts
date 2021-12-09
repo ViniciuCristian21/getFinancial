@@ -12,8 +12,10 @@ import { DatabaseFbService } from './shared/database-fb.service';
 export class DashboardPage implements OnInit {
   itens: any = [];
   valueMonth: number = 0;
+  filterResult: any = [];
   qtdSales: number = 0;
   valueTotal: number = 0;
+  databaseFilter: any = [];
   constructor(private popoverDelete: DeletePopoverService,
               private modalNewItemService: NewItemModalService,
               private getid: GetIdService,
@@ -53,13 +55,21 @@ export class DashboardPage implements OnInit {
   }
 
   async cauculatorSalesMonth() {
+    // Pegando a data
     const currentDate = new Date()
     const currentMonth = currentDate.getMonth() + 1;
 
-    const result = await this.databaseService.getItensFilter();
-    const r = result.filter(i => i.data === currentMonth);
+    // Pegando a informação do banco de dados
+    this.databaseFilter = [];
+    this.databaseFilter = await this.databaseService.getItensFilter();
+
+    // Filtrando po mês
+    this.filterResult = [];
+    this.filterResult = this.databaseFilter.filter(i => i.data === currentMonth);
+
+    // Cauculando os valores
     this.valueMonth = 0;
-    r.forEach(element => {
+    this.filterResult.forEach(element => {
       this.valueMonth = element.value + this.valueMonth;
     });
 
@@ -72,9 +82,9 @@ export class DashboardPage implements OnInit {
     });
   }
 
-  async execute() {
+  execute() {
     this.cauculatorQTD(this.itens);
-    await this.cauculatorSalesMonth();
+    this.cauculatorSalesMonth();
     this.cauculatorTotal();
   }
 

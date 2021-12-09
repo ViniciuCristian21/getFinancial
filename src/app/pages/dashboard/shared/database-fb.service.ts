@@ -30,7 +30,7 @@ export class DatabaseFbService {
 
   async getItensFilter() {
     const itens = await getDocs(this.userCollectionRef);
-
+    this.resultFilter = [];
     itens.docs.map(doc => {
       this.resultFilter.push({
         id: doc.id,

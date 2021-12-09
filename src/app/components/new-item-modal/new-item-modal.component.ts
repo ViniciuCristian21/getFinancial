@@ -22,6 +22,9 @@ export class NewItemModalComponent implements OnInit {
   }
 
   async saveItens() {
+    if(this.itens.name === undefined || this.itens.value === undefined) {
+      return
+    }
     try {
       this.databaseService.InsertData(this.itens);
       this.exitModal();
