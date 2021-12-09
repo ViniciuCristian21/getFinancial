@@ -11,6 +11,9 @@ import { DatabaseFbService } from './shared/database-fb.service';
 })
 export class DashboardPage implements OnInit {
   itens: any = [];
+  valueMonth: number = 0;
+  qtdSales: number = 0;
+  valueTotal: number = 0;
   constructor(private popoverDelete: DeletePopoverService,
               private modalNewItemService: NewItemModalService,
               private getid: GetIdService,
@@ -18,6 +21,15 @@ export class DashboardPage implements OnInit {
 
   ngOnInit() {
     this.getAll();
+  }
+  doRefresh(event) {
+    this.getAll();
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
   }
 
   async onDelete(id: string) {
@@ -28,12 +40,42 @@ export class DashboardPage implements OnInit {
   async modalNewItem() {
     await this.modalNewItemService.presentQunatitiesProduct();
   }
-  ionViewWillEnter(){
-    this.getAll();
-  }
+
   async getAll() {
     this.itens = await this.databaseService.getAll();
-    console.log(this.itens)
+    console.log(this.itens);
+
+    this.execute()
+  }
+
+  cauculatorQTD(itens) {
+    this.qtdSales = itens.length;
+  }
+
+  async cauculatorSalesMonth() {
+    const currentDate = new Date()
+    const currentMonth = currentDate.getMonth() + 1;
+
+    const result = await this.databaseService.getItensFilter();
+    const r = result.filter(i => i.data === currentMonth);
+    this.valueMonth = 0;
+    r.forEach(element => {
+      this.valueMonth = element.value + this.valueMonth;
+    });
+
+  }
+
+  cauculatorTotal() {
+    this.valueTotal = 0;
+    this.itens.forEach(element => {
+      this.valueTotal = element.value + this.valueTotal;
+    });
+  }
+
+  async execute() {
+    this.cauculatorQTD(this.itens);
+    await this.cauculatorSalesMonth();
+    this.cauculatorTotal();
   }
 
 

@@ -1,33 +1,26 @@
 import { Itens } from './itens';
 import { Injectable } from '@angular/core';
 import { db } from 'src/environments/environment';
-import { collection, getDocs, addDoc, doc, updateDoc, deleteDoc, QuerySnapshot } from '@firebase/firestore';
+import { collection, getDocs, addDoc, doc, updateDoc, deleteDoc} from '@firebase/firestore';
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseFbService {
   userCollectionRef = collection(db, "Itens");
   result: any = [];
+  resultFilter: any = [];
   constructor() { }
 
   async getAll() {
     const snap = await getDocs(this.userCollectionRef);
 
-    // snap.forEach((doc => {
-    //   this.result.push({
-    //     id: doc.id,
-    //     name: doc.data().name,
-    //     value: doc.data().value,
-    //     data: doc.data().data
-    //   })
-    // }))
     this.result = [];
     snap.docs.map(doc => {
       this.result.push({
         id: doc.id,
         name: doc.data().name,
         value: doc.data().value,
-        data: doc.data().data
+        data: doc.data().date.dateFull
       })
     });
 
@@ -35,14 +28,38 @@ export class DatabaseFbService {
     return this.result;
   }
 
-  async InsertData(Itens: Itens) {
-    const {name, value, data} = Itens;
-    const [newData,] = data.split('T')
+  async getItensFilter() {
+    const itens = await getDocs(this.userCollectionRef);
 
+    itens.docs.map(doc => {
+      this.resultFilter.push({
+        id: doc.id,
+        name: doc.data().name,
+        value: doc.data().value,
+        data: doc.data().date.onlyMonth
+      })
+    })
+
+    return this.resultFilter;
+  }
+
+  async InsertData(Itens: Itens) {
+
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    const currentMonth = day + '/' + month + '/' + year;
+
+
+    const {name, value} = Itens;
     await addDoc(this.userCollectionRef, {
       name: name,
       value: value,
-      data: newData
+      date: {
+        onlyMonth: month,
+        dateFull: currentMonth
+      }
     });
   }
 
